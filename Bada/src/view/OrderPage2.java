@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -17,6 +19,7 @@ import dao.LabelDAO;
 import dao.PanelDAO;
 import dao.TextDAO;
 import dto.FrameVO;
+import dto.StuffVO;
 
 public class OrderPage2 {
 	
@@ -31,11 +34,14 @@ public class OrderPage2 {
 	JTextArea noteArea;
 	
 	public OrderPage2() {
+		
 		order2Frame = new FrameDAO();
 		order2Frame.makeFrame();
 		order2Layer = new PanelDAO();
 		order2Layer.makeLayer();
 		order2Frame.add(order2Layer);
+//		String message = "주문가능한 택배박스의 크기는\r\n[가로+세로+높이]의 합이 160cm 이내입니다.";
+//		JOptionPane.showMessageDialog(order2Frame, message, "택배주문 신청", JOptionPane.INFORMATION_MESSAGE);
 		
 		new PanelDAO().makeColorPanel(order2Layer);
 		titleLabel = new LabelDAO("택배주문 신청", FrameVO.font40, order2Layer, 1);
@@ -47,7 +53,7 @@ public class OrderPage2 {
 		pLabel.setOpaque(true);
 		pLabel.setBackground(FrameVO.grayColor);
 		//박스크기 및 무게
-		parcelLabel = new LabelDAO("· 박스 크기 / 무게 (크기: 가로+세로+높이의 합)", FrameVO.font20, order2Layer, 1);
+		parcelLabel = new LabelDAO("· 박스 크기(가로+세로+높이의 합) / 무게 ", FrameVO.font20, order2Layer, 1);
 		parcelLabel.setBounds(20, 190, 440, 30);
 		sizeLabel = new LabelDAO("크기 :", FrameVO.font18, order2Layer, 1);
 		sizeLabel.setBounds(30, 230, 60, 30);
@@ -188,5 +194,25 @@ public class OrderPage2 {
 				JOptionPane.showMessageDialog(order2Frame, message, "취급제한 품목", JOptionPane.PLAIN_MESSAGE);
 			}
 		});
+	}
+	
+	//주문물품 정보 저장 메서드
+	public StuffVO getStuffInfo() {
+		Integer size = Integer.parseInt(sizeText.getText());
+		int weight = Integer.parseInt(weightText.getText());
+		String code = codeBox.getSelectedItem().toString(); 
+		String stuff = stuffText.getText();
+		int box = Integer.parseInt(boxText.getText());
+		String note = noteArea.getText();		
+		
+		StuffVO stuffVO = new StuffVO();
+		stuffVO.setSize(size);
+		stuffVO.setWeight(weight);
+		stuffVO.setCode(code);
+		stuffVO.setStuff(stuff);
+		stuffVO.setBox(box);
+		stuffVO.setNote(note);
+		
+		return stuffVO;
 	}
 }
