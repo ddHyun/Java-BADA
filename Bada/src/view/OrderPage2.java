@@ -27,7 +27,7 @@ public class OrderPage2 {
 					stuffCodeLabel, stuffLabel, boxLabel, boxLabel2, noteLabel;
 	TextDAO sizeText, weightText, stuffText, boxText, noteText;	
 	JComboBox<String> codeBox, noteBox;
-	ButtonDAO notPermittedItemBtn, prevBtn, cancelBtn, nextBtn;
+	ButtonDAO notPermittedItemBtn, cancelBtn, nextBtn;
 	JTextArea noteArea;
 	
 	public OrderPage2() {
@@ -124,19 +124,15 @@ public class OrderPage2 {
 			}
 		});
 		
-		//이전, 취소, 다음 버튼
-		prevBtn = new ButtonDAO();
-		prevBtn.makeBlueButton("<< 이전", order2Layer, 1);
-		prevBtn.setBounds(20, 640, 135, 50);
-		
+		//취소, 다음 버튼				
 		cancelBtn = new ButtonDAO();
-		cancelBtn.makeGrayButton("취소", order2Layer, 1);
-		cancelBtn.setBounds(165, 640, 130, 50);
+		cancelBtn.makeGrayButton("취소하기", order2Layer, 1);
+		cancelBtn.setBounds(20, 640, 200, 50);
 		cancelBtn.setFont(FrameVO.font30);
 		
 		nextBtn = new ButtonDAO();
-		nextBtn.makeBlueButton("다음 >>", order2Layer, 1);
-		nextBtn.setBounds(305, 640, 135, 50);
+		nextBtn.makeBlueButton("다음단계 >>", order2Layer, 1);
+		nextBtn.setBounds(240, 640, 200, 50);
 		
 		//취소버튼 : 주문2 -> 메인페이지 이동
 		cancelBtn.addActionListener(new ActionListener() {
@@ -146,17 +142,7 @@ public class OrderPage2 {
 				order2Frame.dispose();
 				new MainPage().mainFrame.setVisible(true);
 			}
-		});
-		
-		//이전버튼 : 주문2 -> 주문1페이지 이동
-		prevBtn.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				order2Frame.dispose();
-				new OrderPage().orderFrame.setVisible(true);
-			}
-		});
+		});		
 		
 		//다음버튼 : 결제페이지 이동
 		nextBtn.addActionListener(new ActionListener() {
