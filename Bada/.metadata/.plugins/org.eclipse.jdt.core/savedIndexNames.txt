@@ -1,0 +1,1 @@
+INDEX VERSION 1.131+C:\JAVA WEB\work\Bada\.metadata\.plugins\org.eclipse.jdt.core
