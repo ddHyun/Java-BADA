@@ -171,7 +171,8 @@ public class OrderPage {
 		getAddrEvent(addressBtn, receiveAddrArea, orderFrame);
 		
 		//아이콘 이미지
-		new ImageDAO().showTitleIcon(orderFrame);		
+		new ImageDAO().showTitleIcon(orderFrame);	
+//		orderFrame.setVisible(true);
 	}
 	
 	//수령인 정보 저장하기 메서드
