@@ -2,7 +2,16 @@ package dto;
 
 public class StuffVO {//주문물품 관련 정보
 	private int size, weight, box;
-	private String code, note, stuff;
+	private String code, note, stuff;	
+	
+	//싱글톤
+	private static StuffVO instance = new StuffVO();
+	
+	private StuffVO(){};
+	
+	public static StuffVO getInstance() {
+		return instance;
+	}
 	
 	public int getSize() {
 		return size;

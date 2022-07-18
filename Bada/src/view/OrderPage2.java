@@ -156,6 +156,7 @@ public class OrderPage2 {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				order2Frame.dispose();
+				setStuffInfo();
 				new OrderPage3().order3Frame.setVisible(true);
 			}
 		});
@@ -197,22 +198,21 @@ public class OrderPage2 {
 	}
 	
 	//주문물품 정보 저장 메서드
-	public StuffVO getStuffInfo() {
-		Integer size = Integer.parseInt(sizeText.getText());
+	public void setStuffInfo() {
+		int size = Integer.parseInt(sizeText.getText().toString());
 		int weight = Integer.parseInt(weightText.getText());
 		String code = codeBox.getSelectedItem().toString(); 
 		String stuff = stuffText.getText();
 		int box = Integer.parseInt(boxText.getText());
-		String note = noteArea.getText();		
+		String note = noteArea.getText();	
 		
-		StuffVO stuffVO = new StuffVO();
+		StuffVO stuffVO = StuffVO.getInstance();
+		
 		stuffVO.setSize(size);
-		stuffVO.setWeight(weight);
+		stuffVO.setWeight(weight);		
 		stuffVO.setCode(code);
 		stuffVO.setStuff(stuff);
 		stuffVO.setBox(box);
 		stuffVO.setNote(note);
-		
-		return stuffVO;
 	}
 }
