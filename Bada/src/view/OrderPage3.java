@@ -17,7 +17,6 @@ public class OrderPage3 {
 	FrameDAO order3Frame;
 	PanelDAO order3Layer;
 	LabelDAO titleLabel;
-	List<String> receiverInfo = new OrderPage().receiverInfo();
 	StuffVO stuffVO = StuffVO.getInstance();
 	
 	public OrderPage3() {
@@ -32,9 +31,9 @@ public class OrderPage3 {
 		titleLabel.makeTitleLabel();
 		
 			System.out.println("========page3==========");
-			System.out.println("수령자 이름: "+receiverInfo.get(0));
-			System.out.println("수령자 전화번호: "+receiverInfo.get(1));
-			System.out.println("수령자 주소: "+receiverInfo.get(2));
+//			System.out.println("수령자 이름: "+receiverInfo.get(0));
+//			System.out.println("수령자 전화번호: "+receiverInfo.get(1));
+//			System.out.println("수령자 주소: "+receiverInfo.get(2));
 			System.out.println("물품 크기: "+stuffVO.getSize());
 			System.out.println("물품 무게: "+stuffVO.getWeight());
 			System.out.println("물품 코드: "+stuffVO.getCode());

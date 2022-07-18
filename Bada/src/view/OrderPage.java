@@ -22,6 +22,7 @@ import dao.LabelDAO;
 import dao.PanelDAO;
 import dao.TextDAO;
 import dto.FrameVO;
+import dto.ReceiverVO;
 import dto.UserVO;
 
 public class OrderPage {
@@ -172,21 +173,25 @@ public class OrderPage {
 		
 		//아이콘 이미지
 		new ImageDAO().showTitleIcon(orderFrame);	
-//		orderFrame.setVisible(true);
+		orderFrame.setVisible(true);
 	}
 	
 	//수령인 정보 저장하기 메서드
-	public List<String> receiverInfo(){
+	public void receiverInfo(){
 		String name = receiveNameText.getText();
 		String phone = receivePhoneText.getText();
 		String address = receiveAddrArea.getText();
 		
-		List<String> list = new ArrayList<String>();
-		list.add(name);
-		list.add(phone);
-		list.add(address);
+		ReceiverVO receiverVO = ReceiverVO.getInstance();
 		
-		return list;
+		receiverVO.setName(name);
+		receiverVO.setPhone(phone);
+		receiverVO.setAddress(address);
+		
+		System.out.println("======page1=======");
+		System.out.println("수령자 이름: "+receiverVO.getName());
+		System.out.println("수령자 전화번호: "+receiverVO.getPhone());
+		System.out.println("수령자 주소: "+receiverVO.getAddress());
 	}
 	
 	//우편번호 int형으로 가지고 있기 메서드(요금 계산시 필요)
