@@ -163,7 +163,7 @@ public class OrderPage2 {
 		
 		//아이콘 이미지
 		new ImageDAO().showTitleIcon(order2Frame);
-		order2Frame.setVisible(true);
+//		order2Frame.setVisible(true);
 		
 	}
 	
