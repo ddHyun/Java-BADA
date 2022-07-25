@@ -9,7 +9,8 @@ public class View {
 //		new JoinPage();
 //		new LoginPage2();
 //		new MainPage();
-		new OrderPage();
-		new OrderPage2();
+//		new OrderPage();
+//		new OrderPage2();
+		new OrderPage3();
 	}
 }

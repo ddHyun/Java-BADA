@@ -75,6 +75,7 @@ public class MainPage {
 		menuBtn4.setBounds(240, 660, 200, 40);
 		
 		new ImageDAO().showTitleIcon(mainFrame);
+		//mainFrame.setVisible(true);
 	}
 	
 	//로그인한 회원 이름 가져오기 메서드

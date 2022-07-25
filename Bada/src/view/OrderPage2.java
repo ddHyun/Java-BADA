@@ -32,6 +32,7 @@ public class OrderPage2 {
 	JComboBox<String> codeBox, noteBox;
 	ButtonDAO notPermittedItemBtn, cancelBtn, nextBtn;
 	JTextArea noteArea;
+	boolean check = true; //빈칸없이 작성 다 했는 지 확인용
 	
 	public OrderPage2() {
 		
@@ -48,10 +49,9 @@ public class OrderPage2 {
 		titleLabel.makeTitleLabel();
 		
 		//물품 정보
-		pLabel = new LabelDAO("물품 정보", FrameVO.font25, order2Layer, 1);
+		pLabel = new LabelDAO("물품 정보", FrameVO.font25B, order2Layer, 1);
 		pLabel.setBounds(20, 140, 200, 30);
-		pLabel.setOpaque(true);
-		pLabel.setBackground(FrameVO.grayColor);
+
 		//박스크기 및 무게
 		parcelLabel = new LabelDAO("· 박스 크기(가로+세로+높이의 합) / 무게 ", FrameVO.font20, order2Layer, 1);
 		parcelLabel.setBounds(20, 190, 440, 30);
@@ -150,14 +150,26 @@ public class OrderPage2 {
 			}
 		});		
 		
-		//다음버튼 : 결제페이지 이동
+		//다음버튼 : 주문확인 페이지 이동
 		nextBtn.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				order2Frame.dispose();
-				setStuffInfo();
-				new OrderPage3().order3Frame.setVisible(true);
+				if(Float.parseFloat(sizeText.getText().toString())>160) {
+					JOptionPane.showMessageDialog(order2Frame,
+							"주문가능한 택배박스의 크기는\r\n[가로+세로+높이]의 합이 160cm 이내입니다.", "택배주문", JOptionPane.ERROR_MESSAGE);
+					sizeText.setText("");
+				}
+				
+				checkNull();
+				if(check) {
+					order2Frame.dispose();
+					setStuffInfo();
+					new OrderPage3().order3Frame.setVisible(true);					
+				}else {
+					JOptionPane.showMessageDialog(order2Frame,
+							"항목을 빠짐없이 채워주세요", "택배주문", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		
@@ -199,8 +211,8 @@ public class OrderPage2 {
 	
 	//주문물품 정보 저장 메서드
 	public void setStuffInfo() {
-		int size = Integer.parseInt(sizeText.getText().toString());
-		int weight = Integer.parseInt(weightText.getText());
+		float size = Float.parseFloat(sizeText.getText().toString());
+		float weight = Float.parseFloat(weightText.getText());
 		String code = codeBox.getSelectedItem().toString(); 
 		String stuff = stuffText.getText();
 		int box = Integer.parseInt(boxText.getText());
@@ -214,5 +226,29 @@ public class OrderPage2 {
 		stuffVO.setStuff(stuff);
 		stuffVO.setBox(box);
 		stuffVO.setNote(note);
+	}
+	
+	//작성 다 했는지 확인하는 메서드
+	public boolean checkNull() {
+		if(sizeText.getText().equals("")) {
+			check = false;
+		}
+		if(weightText.getText().equals("")) {
+			check = false;
+		}
+		if(codeBox.getSelectedItem().toString().equals("  ㄴ내용물")) {
+			check = false;
+		}
+		if(stuffText.getText().equals("")) {
+			check = false;
+		}
+		if(boxText.getText().equals("")) {
+			check = false;
+		}
+		if(noteArea.getText().equals("")) {
+			check = false;
+		}
+		
+		return check;
 	}
 }

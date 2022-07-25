@@ -1,8 +1,9 @@
 package dto;
 
 public class StuffVO {//주문물품 관련 정보
-	private int size, weight, box;
-	private String code, note, stuff;	
+	private int box;
+	private String code, note, stuff;
+	private float size, weight;
 	
 	//싱글톤
 	private static StuffVO instance = new StuffVO();
@@ -13,16 +14,16 @@ public class StuffVO {//주문물품 관련 정보
 		return instance;
 	}
 	
-	public int getSize() {
+	public float getSize() {
 		return size;
 	}
-	public void setSize(int size) {
+	public void setSize(float size) {
 		this.size = size;
 	}
-	public int getWeight() {
+	public float getWeight() {
 		return weight;
 	}
-	public void setWeight(int weight) {
+	public void setWeight(float weight) {
 		this.weight = weight;
 	}
 	public int getBox() {
