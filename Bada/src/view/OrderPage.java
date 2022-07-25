@@ -52,10 +52,8 @@ public class OrderPage {
 		titleLabel.makeTitleLabel();
 		
 		//주문자 정보
-		sendLabel = new LabelDAO("주문자 정보", FrameVO.font25, orderLayer, 1);
-		sendLabel.setBounds(20, 140, 200, 30);
-		sendLabel.setOpaque(true); //label에 배경색 넣을 땐 setOpaque(true) -> 배경색 넣어야 함
-		sendLabel.setBackground(FrameVO.grayColor);
+		sendLabel = new LabelDAO("주문자 정보", FrameVO.font25B, orderLayer, 1);
+		sendLabel.setBounds(20, 140, 200, 30);		
 		sendInfoBtn = new ButtonDAO();
 		sendInfoBtn.makeGrayButton("정보 불러오기", orderLayer, 1);
 		sendInfoBtn.setBounds(280, 150, 160, 30);
@@ -107,10 +105,8 @@ public class OrderPage {
 		});
 		
 		//수령인 정보
-		receiveLabel = new LabelDAO("수령인 정보", FrameVO.font25, orderLayer, 1);
+		receiveLabel = new LabelDAO("수령인 정보", FrameVO.font25B, orderLayer, 1);
 		receiveLabel.setBounds(20, 400, 200, 30);
-		receiveLabel.setOpaque(true);
-		receiveLabel.setBackground(FrameVO.grayColor);
 		receiveNameLabel = new LabelDAO("이름", FrameVO.font20, orderLayer, 1);
 		receiveNameLabel.setBounds(20, 450, 100, 30);
 		receiveNameText = new TextDAO(FrameVO.font18, orderLayer, 1);
@@ -162,6 +158,8 @@ public class OrderPage {
 					receiverInfo();
 					orderFrame.dispose();
 					new OrderPage2().order2Frame.setVisible(true);
+					String message = "주문가능한 택배박스의 크기는\r\n[가로+세로+높이]의 합이 160cm 이내입니다.";
+					JOptionPane.showMessageDialog(new OrderPage2().order2Frame, message, "택배주문 신청", JOptionPane.INFORMATION_MESSAGE);
 				}else {
 					JOptionPane.showMessageDialog(orderFrame, "항목을 빠짐없이 채워주세요", jTitle, JOptionPane.ERROR_MESSAGE);
 				}
@@ -187,11 +185,6 @@ public class OrderPage {
 		receiverVO.setName(name);
 		receiverVO.setPhone(phone);
 		receiverVO.setAddress(address);
-		
-		System.out.println("======page1=======");
-		System.out.println("수령자 이름: "+receiverVO.getName());
-		System.out.println("수령자 전화번호: "+receiverVO.getPhone());
-		System.out.println("수령자 주소: "+receiverVO.getAddress());
 	}
 	
 	//우편번호 int형으로 가지고 있기 메서드(요금 계산시 필요)
