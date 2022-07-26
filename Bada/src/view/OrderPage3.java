@@ -19,7 +19,7 @@ import dto.UserVO;
 
 public class OrderPage3 {
 
-	//결제페이지
+	//주문정보 확인페이지
 	
 	FrameDAO order3Frame;
 	PanelDAO order3Layer;
@@ -42,7 +42,7 @@ public class OrderPage3 {
 		titleLabel = new LabelDAO("주문확인", FrameVO.font40, order3Layer, 1);
 		titleLabel.makeTitleLabel();
 		
-		//주문내역 확인		
+		//주문정보 확인		
 		orderArea = new JTextArea();
 		orderScrollPane = new JScrollPane(orderArea);
 		orderArea.setBounds(20, 190, 420, 430);
@@ -83,7 +83,7 @@ public class OrderPage3 {
 		nextBtn.makeBlueButton("결제단계 >>", order3Layer, 1);
 		nextBtn.setBounds(240, 640, 200, 50);
 		
-		//취소버튼 : 주문2 -> 메인페이지 이동
+		//취소버튼 : 주문3 -> 메인페이지 이동
 		cancelBtn.addActionListener(new ActionListener() {
 			
 			@Override

@@ -11,6 +11,7 @@ public class View {
 //		new MainPage();
 //		new OrderPage();
 //		new OrderPage2();
-		new OrderPage3();
+//		new OrderPage3();
+		new PayPage();
 	}
 }
