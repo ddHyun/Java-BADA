@@ -20,6 +20,7 @@ public class FrameVO{
 	public static Font font20 = new Font("³ª´®°íµñ", Font.BOLD, 20);
 	public static Font font25 = new Font("³ª´®°íµñ", Font.PLAIN, 25);
 	public static Font font25B = new Font("³ª´®°íµñ", Font.BOLD, 25);
+	public static Font font25I = new Font("³ª´®°íµñ", Font.ITALIC, 25);
 	public static Font font30 = new Font("³ª´®°íµñ", Font.BOLD, 30);
 	public static Font font40 = new Font("³ª´®°íµñ", Font.BOLD, 40);
 	public static Font font60 = new Font("³ª´®°íµñ", Font.BOLD, 60);

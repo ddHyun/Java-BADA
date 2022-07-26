@@ -37,7 +37,7 @@ public class OrderPage {
 	JScrollPane scrollPane, scrollPane2;
 	ArrayList<UserVO> userList = new ArrayList<UserVO>();
 	String jTitle = "택배주문 신청";
-	int senderZip, receiverZip;
+	static int senderZip, receiverZip;
 	
 	//택배주문 신청 페이지
 	public OrderPage() {

@@ -9,7 +9,7 @@ public class ReceiverVO {
 	public static ReceiverVO getInstance() {
 		return instance;
 	}	
-
+	
 	public String getName() {
 		return name;
 	}
