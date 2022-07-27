@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class CertifSection{
-	//인증번호 생성 후 인증 일치,불일치 메서드
+	//인증번호 생성 후 인증 일치,불일치 확인 클래스
 	
 	String num;
 	
@@ -25,7 +25,7 @@ public class CertifSection{
 				System.out.println("인증번호확인 메서드 :"+num);
 				if(!textfield.getText().equals(num)) {
 					JOptionPane.showMessageDialog(frame, "번호가 일치하지 않습니다.\r\n다시 시도해주세요.", 
-							"휴대전화 인증", JOptionPane.ERROR_MESSAGE);	
+							"인증하기", JOptionPane.ERROR_MESSAGE);	
 					new EventListenerDAO().removeText(textfield);
 					
 					num = "";
@@ -35,10 +35,10 @@ public class CertifSection{
 					}
 					
 					JOptionPane.showMessageDialog(frame, "인증번호 [ "+num+" ]를 화면에 입력해주세요.", 
-							"휴대전화 인증", JOptionPane.PLAIN_MESSAGE);		
+							"인증하기", JOptionPane.PLAIN_MESSAGE);		
 				}else {
 					JOptionPane.showMessageDialog(frame, "인증이 완료되었습니다.", 
-							"휴대전화 인증", JOptionPane.PLAIN_MESSAGE);	
+							"인증하기", JOptionPane.PLAIN_MESSAGE);	
 					btn2.setEnabled(false);
 					textfield.setEnabled(false);
 				}		
