@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,7 +12,7 @@ import dao.ImageDAO;
 import dao.LabelDAO;
 import dao.PanelDAO;
 import dto.FrameVO;
-import dto.ReceiverVO;
+import dto.MoneyVO;
 import dto.StuffVO;
 
 public class PayPage {
@@ -61,7 +60,7 @@ public class PayPage {
 		//충전금액
 		
 		//내 충전금액 
-		loadMoneyLabel = new LabelDAO("나의 충전금액   "+loadMoney+"원", FrameVO.font20, payLayer, 1);
+		loadMoneyLabel = new LabelDAO("나의 충전잔액   "+loadMoney+"원", FrameVO.font20, payLayer, 1);
 		loadMoneyLabel.setBounds(20, 590, 400, 30);
 		loadMoneyLabel.setHorizontalAlignment(JLabel.TRAILING);
 		loadMoneyLabel.setForeground(Color.BLUE);
@@ -91,11 +90,21 @@ public class PayPage {
 			loadMoneyBtn = new ButtonDAO();
 			loadMoneyBtn.makeBlueButton("충전하기", payLayer, 1);
 			loadMoneyBtn.setBounds(240, 640, 200, 50);
+			
+			//충전버튼 클릭 : 결제 -> 충전페이지 이동
+			loadMoneyBtn.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					payFrame.setVisible(false);
+					new LoadMoneyPage().loadMoneyFrame.setVisible(true);
+				}
+			});
 		}
 		
 		//아이콘이미지
 		new ImageDAO().showTitleIcon(payFrame);
-		payFrame.setVisible(true);
+//		payFrame.setVisible(true);
 
 	}
 	
@@ -158,7 +167,8 @@ public class PayPage {
 		//총결제금액
 		totalCharge = (basicCharge * boxNum) + distance;
 		
+		//결제내역조회를 위해 결제금액을 MoneyVO에 저장
+		MoneyVO vo = MoneyVO.getInstance();
+		vo.setCharge(totalCharge);		
 	}
-	
-
 }
