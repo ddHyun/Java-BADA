@@ -171,7 +171,7 @@ public class OrderPage {
 		
 		//아이콘 이미지
 		new ImageDAO().showTitleIcon(orderFrame);	
-		orderFrame.setVisible(true);
+//		orderFrame.setVisible(true);
 	}
 	
 	//수령인 정보 저장하기 메서드
