@@ -45,8 +45,8 @@ public class OrderPage3 {
 		//주문정보 확인		
 		orderArea = new JTextArea();
 		orderScrollPane = new JScrollPane(orderArea);
-		orderArea.setBounds(20, 190, 420, 430);
-		orderScrollPane.setBounds(20, 190, 420, 430);
+		orderArea.setBounds(20, 140, 420, 480);
+		orderScrollPane.setBounds(20, 140, 420, 480);
 		orderArea.setFont(FrameVO.font18);
 		orderArea.setLineWrap(true);
 		order3Layer.add(orderScrollPane);
