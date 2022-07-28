@@ -3,8 +3,10 @@ package view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import dao.ButtonDAO;
 import dao.FrameDAO;
@@ -14,6 +16,7 @@ import dao.PanelDAO;
 import dto.FrameVO;
 import dto.MoneyVO;
 import dto.StuffVO;
+import dto.UserVO;
 
 public class PayPage {
 	
@@ -22,7 +25,11 @@ public class PayPage {
 	ButtonDAO loadMoneyBtn, payBtn, cancelBtn;
 	LabelDAO titleLabel, basicChargeLabel, boxNumLabel, distanceLabel1, distanceLabel2, lineLabel,
 				totalChargeLabel, loadMoneyLabel;
+	MoneyVO mVO = MoneyVO.getInstance();
+	ArrayList<UserVO> userList = new ArrayList<>();
 	int basicCharge, boxNum, distance, totalCharge, loadMoney = 0;
+	boolean check = false;
+	int chance = 3; //비밀번호 오류 체크용 변수
 	
 	public PayPage() {
 		payFrame = new FrameDAO();
@@ -60,6 +67,7 @@ public class PayPage {
 		//충전금액
 		
 		//내 충전금액 
+		loadMoney = MoneyVO.getInstance().getTotalMoney();
 		loadMoneyLabel = new LabelDAO("나의 충전잔액   "+loadMoney+"원", FrameVO.font20, payLayer, 1);
 		loadMoneyLabel.setBounds(20, 590, 400, 30);
 		loadMoneyLabel.setHorizontalAlignment(JLabel.TRAILING);
@@ -95,16 +103,25 @@ public class PayPage {
 			loadMoneyBtn.addActionListener(new ActionListener() {
 				
 				@Override
-				public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(ActionEvent e) {					
 					payFrame.setVisible(false);
 					new LoadMoneyPage().loadMoneyFrame.setVisible(true);
+				}
+			});
+		}else {//결제하기버튼 클릭시 
+			payBtn.setVisible(true);
+			payBtn.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					checkPwd();					
 				}
 			});
 		}
 		
 		//아이콘이미지
 		new ImageDAO().showTitleIcon(payFrame);
-//		payFrame.setVisible(true);
+		payFrame.setVisible(true);
 
 	}
 	
@@ -165,10 +182,37 @@ public class PayPage {
 		}
 		
 		//총결제금액
-		totalCharge = (basicCharge * boxNum) + distance;
-		
-		//결제내역조회를 위해 결제금액을 MoneyVO에 저장
-		MoneyVO vo = MoneyVO.getInstance();
-		vo.setCharge(totalCharge);		
+		totalCharge = (basicCharge * boxNum) + distance;			
 	}
+	
+	//비밀번호 체크 메서드
+	public void checkPwd() {
+		while(true) {
+			String input = JOptionPane.showInputDialog(payFrame, 
+					"비밀번호를 입력하세요(기회 "+chance+"번)", "결제하기", JOptionPane.DEFAULT_OPTION);
+			userList = new JoinPage().getUserInfo();
+			UserVO vo = new UserVO();
+			String pwd = userList.get(vo.index).getPw();
+			
+			if(input.equals(pwd)) {
+				mVO.setCharge(totalCharge);	
+				mVO.setTotalMoney(loadMoney-totalCharge);
+				payFrame.dispose();
+				new PayPage2().pay2Frame.setVisible(true);
+				break;
+			}else if(chance != 1) {
+				--chance;
+				JOptionPane.showMessageDialog(payFrame, "비밀번호 오류입니다.\r\n다시 시도해 주세요", 
+						"결제하기", JOptionPane.ERROR_MESSAGE);
+			}else if(chance == 1) {
+				--chance;
+				JOptionPane.showMessageDialog(payFrame, "비밀번호 3회 오류입니다. 메인화면으로 이동합니다", 
+						"결제하기", JOptionPane.ERROR_MESSAGE);
+				payFrame.dispose();
+				new MainPage().mainFrame.setVisible(true);
+			}
+		}
+	}
+	
+	
 }

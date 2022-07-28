@@ -25,9 +25,10 @@ public class LoadMoneyPage {
 	PanelDAO loadMoneyLayer;
 	LabelDAO titleLabel, currentMoneyLabel, currentMoney2Label, loadMoneyLabel, loadMoney2Label,
 			totalMoneyLabel, totalMoney2Label, messageLabel;
-	ButtonDAO btn1000, btn10000, btn50000, btnC, yesBtn, noBtn;
+	ButtonDAO btn1000, btn10000, btn50000, btnC, yesBtn, noBtn, payBtn;
 	int currentMoney, loadMoney, totalLoadedMoney;
 	ArrayList<UserVO> userList = new ArrayList<>();
+	MoneyVO mVO = MoneyVO.getInstance();
 	
 	public LoadMoneyPage() {
 		loadMoneyFrame = new FrameDAO();
@@ -43,6 +44,29 @@ public class LoadMoneyPage {
 		ImageDAO cardImage = new ImageDAO();
 		cardImage.showImage("image/card.png", 60, 150, 400, 240, loadMoneyFrame, loadMoneyLayer);
 		
+		//충전 -> '예''아니요'버튼
+		noBtn = new ButtonDAO();
+		noBtn.makeBlueButton("아니오", loadMoneyLayer, 1);
+		noBtn.setBounds(20, 640, 200, 50);
+		noBtn.setVisible(false);
+		//'아니오'버튼 클릭 : 충전 -> 메인페이지 이동
+		noBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				loadMoneyFrame.dispose();
+				new MainPage().mainFrame.setVisible(true);
+			}
+		});
+		
+		yesBtn = new ButtonDAO();
+		yesBtn.makeBlueButton("네", loadMoneyLayer, 1);
+		yesBtn.setBounds(240, 640, 200, 50);
+		yesBtn.setVisible(false);
+		
+		//'네'버튼 클릭 : 충전하기
+		loadMoney();
+				
 		//1000, 10000, 50000원버튼
 		btn50000 = new ButtonDAO();
 		btn50000.makeGrayButton("50000원", loadMoneyLayer, 1);
@@ -77,7 +101,6 @@ public class LoadMoneyPage {
 		//현재잔액 
 		currentMoneyLabel = new LabelDAO("현재잔액", FrameVO.font20, loadMoneyLayer, 1);
 		currentMoneyLabel.setBounds(50, 510, 200, 30);
-		MoneyVO mVO = MoneyVO.getInstance();
 		System.out.println("mVO.getTotalMoney() : "+mVO.getTotalMoney());
 		currentMoney = mVO.getTotalMoney();
 		currentMoney2Label = new LabelDAO(currentMoney+"원", FrameVO.font20, loadMoneyLayer, 1);
@@ -98,28 +121,22 @@ public class LoadMoneyPage {
 		messageLabel.setHorizontalAlignment(JLabel.CENTER);
 		messageLabel.setVisible(false);		
 		
-		//충전 -> '예''아니요'버튼
-		noBtn = new ButtonDAO();
-		noBtn.makeBlueButton("아니오", loadMoneyLayer, 1);
-		noBtn.setBounds(20, 640, 200, 50);
-		noBtn.setVisible(false);
-		//'아니오'버튼 클릭 : 충전 -> 메인페이지 이동
-		noBtn.addActionListener(new ActionListener() {
+		//충전하러 가기 버튼
+		payBtn = new ButtonDAO();
+		payBtn.makeBlueButton("결제하러 가기", loadMoneyLayer, 1);
+		payBtn.setBounds(30, 640, 400, 50);
+		payBtn.setVisible(false);
+		
+		//결제하러 가기 버튼 : 충전 -> 결제3페이지
+		payBtn.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				loadMoneyFrame.dispose();
-				new MainPage().mainFrame.setVisible(true);
+				new PayPage().payFrame.setVisible(true);
 			}
 		});
 		
-		yesBtn = new ButtonDAO();
-		yesBtn.makeBlueButton("네", loadMoneyLayer, 1);
-		yesBtn.setBounds(240, 640, 200, 50);
-		yesBtn.setVisible(false);
-		
-		//'네'버튼 클릭 : 충전하기
-		loadMoney();
 		
 		//아이콘이미지
 		new ImageDAO().showTitleIcon(loadMoneyFrame);
@@ -158,7 +175,7 @@ public class LoadMoneyPage {
 					yesBtn.setVisible(false);
 				}
 				loadMoney2Label.setText(loadMoney+"원");
-				totalLoadedMoney = loadMoney+currentMoney;
+				totalLoadedMoney = loadMoney+mVO.getTotalMoney();
 				totalMoney2Label.setText(totalLoadedMoney+"원");
 			}
 		});
@@ -170,20 +187,39 @@ public class LoadMoneyPage {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String input = 
-						JOptionPane.showInputDialog(loadMoneyFrame, "비밀번호를 입력하세요", 
-								"충전하기", JOptionPane.YES_NO_OPTION);
-				userList = new JoinPage().getUserInfo();
-				UserVO vo = new UserVO();
-				String pwd = userList.get(vo.index).getPw();
-				System.out.println("input : "+input+" / pwd : "+pwd);
-				if(input.equals(pwd)) {
-					JOptionPane.showMessageDialog(loadMoneyFrame, "충전이 완료되었습니다", 
-							"충전하기", JOptionPane.INFORMATION_MESSAGE);
-				}else {
-					JOptionPane.showMessageDialog(loadMoneyFrame, "비밀번호 오류입니다.\r\n다시 시도해 주세요", 
-							"충전하기", JOptionPane.ERROR_MESSAGE);
-					return;
+				int chance = 3;
+				
+				while(chance>0) {					
+					String input = 
+							JOptionPane.showInputDialog(loadMoneyFrame, "비밀번호를 입력하세요(기회 "+chance+"번)", 
+									"충전하기", JOptionPane.DEFAULT_OPTION);
+					userList = new JoinPage().getUserInfo();
+					UserVO vo = new UserVO();
+					String pwd = userList.get(vo.index).getPw();
+					if(input.equals(pwd)) {
+						mVO.setLoadMoney(loadMoney);
+						mVO.setTotalMoney(loadMoney+mVO.getTotalMoney());
+						JOptionPane.showMessageDialog(loadMoneyFrame, "충전이 완료되었습니다", 
+								"충전하기", JOptionPane.INFORMATION_MESSAGE);
+						currentMoney2Label.setText(mVO.getTotalMoney()+"원");
+						loadMoney = 0;
+						loadMoney2Label.setText(loadMoney+"원");
+						messageLabel.setVisible(false);
+						yesBtn.setVisible(false);
+						noBtn.setVisible(false);
+						payBtn.setVisible(true);
+						break;
+					}else if(chance > 1){
+						--chance;
+						JOptionPane.showMessageDialog(loadMoneyFrame, "비밀번호 오류입니다.\r\n다시 시도해 주세요", 
+								"충전하기", JOptionPane.ERROR_MESSAGE);					
+					}else if(chance == 1) {
+						--chance;
+						JOptionPane.showMessageDialog(loadMoneyFrame, "비밀번호 3회 오류입니다. 처음부터 다시 시도해 주세요", 
+								"충전하기", JOptionPane.ERROR_MESSAGE);
+						loadMoneyFrame.dispose();
+						new MainPage().mainFrame.setVisible(true);
+					}
 				}
 			}
 		});
