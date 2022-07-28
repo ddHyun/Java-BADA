@@ -1,5 +1,7 @@
 package view;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import dao.ButtonDAO;
@@ -35,7 +37,7 @@ public class MainPage {
 		new LabelDAO().getTitle(mainLayer);
 		new PanelDAO().makeColorPanel(mainLayer);
 		
-		welcomeLabel = new LabelDAO(getIdxName()+"님 환영합니다!",	FrameVO.font20, mainLayer, 1);
+		welcomeLabel = new LabelDAO(getLoginUser().getName()+"님 환영합니다!",	FrameVO.font20, mainLayer, 1);
 		welcomeLabel.setBounds(20, 130, 300, 30);
 		
 		//로그아웃버튼
@@ -57,16 +59,13 @@ public class MainPage {
 		new ImageDAO().showImage(imgPath2, 240, 190, 200, 240, mainFrame, mainLayer);
 		menuBtn2 = new ButtonDAO();
 		menuBtn2.makeGrayButton("이용안내", mainLayer, 1);
-		menuBtn2.setBounds(240, 400, 200, 40);
-		
+		menuBtn2.setBounds(240, 400, 200, 40);		
 		
 		//menu3 택배주문신청
 		new ImageDAO().showImage(imgPath3, 20, 460, 200, 240, mainFrame, mainLayer);		
 		menuBtn3 = new ButtonDAO();
 		menuBtn3.makeGrayButton("택배주문 신청", mainLayer, 2);
-		menuBtn3.setBounds(20, 660, 200, 40);
-		//택배주문신청 페이지로 이동
-		new EventListenerDAO().movePage(menuBtn3, mainFrame, new OrderPage().orderFrame);
+		menuBtn3.setBounds(20, 660, 200, 40);		
 		
 		//menu4 주문배송 조회
 		new ImageDAO().showImage(imgPath4, 240, 460, 200, 240, mainFrame, mainLayer);
@@ -74,18 +73,45 @@ public class MainPage {
 		menuBtn4.makeGrayButton("주문배송 조회", mainLayer, 2);
 		menuBtn4.setBounds(240, 660, 200, 40);
 		
+		//페이지 이동 클릭이벤트
+		menuBtn1.addActionListener(movePage);
+		menuBtn2.addActionListener(movePage);
+		menuBtn3.addActionListener(movePage);
+		menuBtn4.addActionListener(movePage);
+		
 		//아이콘이미지
 		new ImageDAO().showTitleIcon(mainFrame);
 		mainFrame.setVisible(true);
 	}
-	
-	//로그인한 회원 이름 가져오기 메서드
-	public String getIdxName() {
+		
+	//로그인한 회원 index 접근 메서드
+	public UserVO getLoginUser() {
 		userList = new JoinPage().getUserInfo();
 		UserVO vo = userList.get(UserVO.index);
-		String name = vo.getName();
-		
-		return name;
+		return vo;
 	}
+	
+	//버튼 클릭 시 페이지 이동
+	ActionListener movePage = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			switch(e.getActionCommand()) {
+			case "마이페이지":
+				mainFrame.dispose();
+				new MyPage().mypageFrame.setVisible(true);
+				break;
+			case "이용안내":
+				break;
+			case "택배주문 신청":
+				mainFrame.dispose();
+				new OrderPage().orderFrame.setVisible(true);
+				break;
+			case "주문배송 조회":
+				break;
+			}
+		}
+	};
 		
 }

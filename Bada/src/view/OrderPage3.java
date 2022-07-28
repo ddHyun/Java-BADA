@@ -61,7 +61,7 @@ public class OrderPage3 {
 		orderArea.append(" 주소 : "+uVO.getAddress()+"\r\n");
 		//수령자 정보 textArea에 담기
 		orderArea.append("\r\n");
-		orderArea.append("[수령자]\r\n");
+		orderArea.append("[수령인]\r\n");
 		orderArea.append(" 이름 : "+receiverVO.getName()+"\r\n");
 		orderArea.append(" 전화 : "+receiverVO.getPhone()+"\r\n");
 		orderArea.append(" 주소 : "+receiverVO.getAddress()+"\r\n");

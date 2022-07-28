@@ -193,9 +193,10 @@ public class LoadMoneyPage {
 					String input = 
 							JOptionPane.showInputDialog(loadMoneyFrame, "비밀번호를 입력하세요(기회 "+chance+"번)", 
 									"충전하기", JOptionPane.DEFAULT_OPTION);
-					userList = new JoinPage().getUserInfo();
-					UserVO vo = new UserVO();
-					String pwd = userList.get(vo.index).getPw();
+//					userList = new JoinPage().getUserInfo();
+//					UserVO vo = userList.get(UserVO.index);
+//					String pwd = vo.getPw();
+					String pwd = new MainPage().getLoginUser().getPw();
 					if(input.equals(pwd)) {
 						mVO.setLoadMoney(loadMoney);
 						mVO.setTotalMoney(loadMoney+mVO.getTotalMoney());
