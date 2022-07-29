@@ -10,6 +10,7 @@ import dao.FrameDAO;
 import dao.ImageDAO;
 import dao.LabelDAO;
 import dao.PanelDAO;
+import dao.UserDAO;
 import dto.FrameVO;
 import dto.UserVO;
 
@@ -37,7 +38,8 @@ public class MainPage {
 		new LabelDAO().getTitle(mainLayer);
 		new PanelDAO().makeColorPanel(mainLayer);
 		
-		welcomeLabel = new LabelDAO(getLoginUser().getName()+"님 환영합니다!",	FrameVO.font20, mainLayer, 1);
+		String name = new UserDAO().getInfo().getName();
+		welcomeLabel = new LabelDAO(name+"님 환영합니다!",	FrameVO.font20, mainLayer, 1);
 		welcomeLabel.setBounds(20, 130, 300, 30);
 		
 		//로그아웃버튼
@@ -81,15 +83,8 @@ public class MainPage {
 		
 		//아이콘이미지
 		new ImageDAO().showTitleIcon(mainFrame);
-		mainFrame.setVisible(true);
-	}
-		
-	//로그인한 회원 index 접근 메서드
-	public UserVO getLoginUser() {
-		userList = new JoinPage().getUserInfo();
-		UserVO vo = userList.get(UserVO.index);
-		return vo;
-	}
+//		mainFrame.setVisible(true);
+	}	
 	
 	//버튼 클릭 시 페이지 이동
 	ActionListener movePage = new ActionListener() {

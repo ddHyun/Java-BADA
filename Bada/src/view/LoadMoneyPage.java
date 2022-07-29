@@ -14,6 +14,7 @@ import dao.FrameDAO;
 import dao.ImageDAO;
 import dao.LabelDAO;
 import dao.PanelDAO;
+import dao.UserDAO;
 import dto.FrameVO;
 import dto.MoneyVO;
 import dto.UserVO;
@@ -140,7 +141,7 @@ public class LoadMoneyPage {
 		
 		//아이콘이미지
 		new ImageDAO().showTitleIcon(loadMoneyFrame);
-		loadMoneyFrame.setVisible(true);
+//		loadMoneyFrame.setVisible(true);
 		
 	}
 	
@@ -196,7 +197,7 @@ public class LoadMoneyPage {
 //					userList = new JoinPage().getUserInfo();
 //					UserVO vo = userList.get(UserVO.index);
 //					String pwd = vo.getPw();
-					String pwd = new MainPage().getLoginUser().getPw();
+					String pwd = new UserDAO().getInfo().getPw();
 					if(input.equals(pwd)) {
 						mVO.setLoadMoney(loadMoney);
 						mVO.setTotalMoney(loadMoney+mVO.getTotalMoney());

@@ -505,6 +505,7 @@ public class JoinPage {
 				
 		//아이콘이미지
 		new ImageDAO().showTitleIcon(joinFrame);
+//		joinFrame.setVisible(true);
 	}
 		
 	
@@ -556,7 +557,7 @@ public class JoinPage {
 				vo.setBun2(addrList[5]);
 				//ArrayList에 객체형태로 저장
 				addressList.add(vo);				
-			}		
+			}	
 			
 			//text에 입력값이 없을 때
 			if(textfield.getText().equals("")|| textfield.getText().equals("예)남촌로 15(띄어쓰기 필수)")) {
