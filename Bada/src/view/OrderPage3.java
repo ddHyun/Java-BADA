@@ -12,6 +12,7 @@ import dao.FrameDAO;
 import dao.ImageDAO;
 import dao.LabelDAO;
 import dao.PanelDAO;
+import dao.UserDAO;
 import dto.FrameVO;
 import dto.ReceiverVO;
 import dto.StuffVO;
@@ -53,7 +54,8 @@ public class OrderPage3 {
 		orderArea.setEditable(false);
 		
 		//주문자 정보 textArea에 담기
-		UserVO uVO = getSenderInfo();
+//		UserVO uVO = getSenderInfo();
+		UserVO uVO = new UserDAO().getInfo();
 		orderArea.append("\r\n");
 		orderArea.append("[주문자]\r\n");
 		orderArea.append(" 이름 : "+uVO.getName()+"\r\n");
@@ -111,9 +113,9 @@ public class OrderPage3 {
 	}
 	
 	//주문자 정보 가져오기
-	public UserVO getSenderInfo() {
-		userList = new JoinPage().getUserInfo();
-		UserVO vo = userList.get(UserVO.index);
-		return vo;
-	}
+//	public UserVO getSenderInfo() {
+//		userList = new JoinPage().getUserInfo();
+//		UserVO vo = userList.get(UserVO.index);
+//		return vo;
+//	}
 }

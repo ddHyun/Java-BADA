@@ -39,6 +39,7 @@ public class OrderPage {
 	String jTitle = "택배주문 신청";
 	static int senderZip, receiverZip;
 	
+	
 	//택배주문 신청 페이지
 	public OrderPage() {
 		orderFrame = new FrameDAO();
