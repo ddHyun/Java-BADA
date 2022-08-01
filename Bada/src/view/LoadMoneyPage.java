@@ -271,7 +271,7 @@ public class LoadMoneyPage {
 			
 			//외부파일에 저장
 			FileWriter output = new FileWriter(file, true);
-			//loadMoney(충전금액)/ totalMoney(총 잔액)/ charge(결제금액)
+			//loadMoney(충전금액)/ totalMoney(총 잔액)/ charge(결제금액)//충전날짜
 			output.write(mVO.getLoadMoney()+"\t");
 			output.write(mVO.getTotalMoney()+"\t");
 			output.write(mVO.getCharge()+"\t");

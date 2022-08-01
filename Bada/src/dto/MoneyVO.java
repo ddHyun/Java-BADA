@@ -7,6 +7,7 @@ import dao.UserDAO;
 public class MoneyVO {
 	
 	private int loadMoney, totalMoney, charge; //loadMoney(충전금액)/ totalMoney(총 잔액)/ charge(결제금액)
+	private LocalDate date = LocalDate.now();
 	private String filePath;
 	private String fileName;
 	
@@ -48,6 +49,10 @@ public class MoneyVO {
 	}
 	//현재날짜
 	public LocalDate getDate() {
-		return LocalDate.now();
+		return date;
 	}	
+	
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
 }
