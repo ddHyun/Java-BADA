@@ -3,6 +3,8 @@ package view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -17,6 +19,7 @@ import dao.PanelDAO;
 import dao.UserDAO;
 import dto.FrameVO;
 import dto.MoneyVO;
+import dto.StuffVO;
 import dto.UserVO;
 
 public class LoadMoneyPage {
@@ -26,7 +29,7 @@ public class LoadMoneyPage {
 	PanelDAO loadMoneyLayer;
 	LabelDAO titleLabel, currentMoneyLabel, currentMoney2Label, loadMoneyLabel, loadMoney2Label,
 			totalMoneyLabel, totalMoney2Label, messageLabel;
-	ButtonDAO btn1000, btn10000, btn50000, btnC, yesBtn, noBtn, payBtn;
+	ButtonDAO btn1000, btn10000, btn50000, btnC, yesBtn, noBtn, payBtn, cancelBtn;
 	int currentMoney, loadMoney, totalLoadedMoney;
 	ArrayList<UserVO> userList = new ArrayList<>();
 	MoneyVO mVO = MoneyVO.getInstance();
@@ -128,6 +131,11 @@ public class LoadMoneyPage {
 		payBtn.setBounds(30, 640, 400, 50);
 		payBtn.setVisible(false);
 		
+		cancelBtn = new ButtonDAO();
+		cancelBtn.makeBlueButton("돌아가기", loadMoneyLayer, 1);
+		cancelBtn.setBounds(30, 640, 400, 50);
+		cancelBtn.setVisible(false);
+		
 		//결제하러 가기 버튼 : 충전 -> 결제3페이지
 		payBtn.addActionListener(new ActionListener() {
 			
@@ -135,6 +143,16 @@ public class LoadMoneyPage {
 			public void actionPerformed(ActionEvent e) {
 				loadMoneyFrame.dispose();
 				new PayPage().payFrame.setVisible(true);
+			}
+		});
+		
+		//돌아가기 버튼 : 충전 -> 메인페이지
+		cancelBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				loadMoneyFrame.dispose();
+				new MainPage().mainFrame.setVisible(true);
 			}
 		});
 		
@@ -209,7 +227,16 @@ public class LoadMoneyPage {
 						messageLabel.setVisible(false);
 						yesBtn.setVisible(false);
 						noBtn.setVisible(false);
-						payBtn.setVisible(true);
+						
+						//외부파일에 충전내역 저장하기
+						saveContent();
+						
+						if(StuffVO.getInstance().getBox()==0) {//마이페이지->충전페이지로 넘어왔을 때
+							cancelBtn.setVisible(true);
+						}else {//결제3 ->충전페이지로 넘어왔을 때
+							payBtn.setVisible(true);
+						}
+						
 						break;
 					}else if(chance > 1){
 						--chance;
@@ -225,5 +252,31 @@ public class LoadMoneyPage {
 				}
 			}
 		});
+	}
+	
+	//충전내역 저장하기 메서드
+	public void saveContent() {
+		//로그인된 아이디로 폴더 만들기
+		String folderName = new UserDAO().getInfo().getId();
+		File folder = new File(new UserVO().getUserPath()+folderName+"/");
+		if(!folder.exists()) {
+			folder.mkdirs();
+		}
+		try {
+			//아이디폴더 안에 충전내역 기록파일 만들기
+//			String fileName = "loadMoneyDetail.txt"; 
+			mVO.setFilePath(folderName);
+			File file = new File(mVO.getFilePath());
+			file.createNewFile();
+			
+			//외부파일에 저장
+			FileWriter output = new FileWriter(file, true);
+			//loadMoney(충전금액)/ totalMoney(총 잔액)/ charge(결제금액)
+			output.write(mVO.getLoadMoney()+"\t");
+			output.write(mVO.getTotalMoney()+"\t");
+			output.write(mVO.getCharge()+"\t");
+			output.write(mVO.getDate()+"\r\n");
+			output.close();
+		}catch(Exception e) {}
 	}
 }
