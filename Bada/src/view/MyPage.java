@@ -2,7 +2,9 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import dao.EventListenerDAO;
 import dao.FrameDAO;
 import dao.ImageDAO;
 import dao.LabelDAO;
+import dao.MoneyDAO;
 import dao.PanelDAO;
 import dao.TextDAO;
 import dao.UserDAO;
@@ -37,6 +40,7 @@ public class MyPage {
 	JTextArea addressArea, moneyDetailArea;
 	JScrollPane addressScrollPane, moneyDetailScroll;
 	ArrayList<UserVO> userList = new ArrayList<UserVO>();
+	ArrayList<MoneyVO> moneyList;
 	MoneyVO mVO = MoneyVO.getInstance();
 	int click, click2 = 0;//버튼 클릭으로 form 토글용 변수
 	
@@ -71,7 +75,11 @@ public class MyPage {
 		moneyText = new TextDAO(FrameVO.font20, mypageLayer, 1);
 		moneyText.setBounds(150, 400, 160, 30);
 		moneyText.setEditable(false);
-		moneyText.setText(""+mVO.getTotalMoney()+"원");
+		//로그인된 아이디의 충전관련 정보 가져오기
+		moneyList = new MoneyDAO().getMoneyList();
+		System.out.println("moneyList의 totalmoney : "+moneyList.get(moneyList.size()-1).getTotalMoney());
+		int totalMoney = moneyList.get(moneyList.size()-1).getTotalMoney();
+		moneyText.setText(""+totalMoney+"원");
 		moneyText.setHorizontalAlignment(JLabel.RIGHT);
 		moneyBtn = new ButtonDAO();
 		moneyBtn.makeGrayButton("충전하기", mypageLayer, 1);
@@ -286,12 +294,32 @@ ActionListener showDetail = new ActionListener() {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String loginedId = new UserDAO().getInfo().getId();
-		String path = new UserVO().getUserPath()+loginedId+"/";
-//		FileReader input = new FileReader(path);
-		
-		
-		moneyDetailArea.append("   날짜\t충전금액\t     결제차감\r\n");
-		moneyDetailArea.append("---------------------------------------------------------\r\n");
+		mVO.setFilePath(loginedId);
+		String path = mVO.getFilePath();
+		try {
+			FileReader input = new FileReader(path);
+			BufferedReader br = new BufferedReader(input);
+			
+			String line = "";
+			String temp = "";
+			
+			while((line=br.readLine())!=null) {
+				temp += line + "\r\n";
+			}
+			
+			String[] arData = new String[10];//1줄씩 저장할 공간
+			String[] moneylist = new String[10];//split(tab) 저장할 공간
+			
+			arData = temp.split("\r\n");
+			
+			moneyDetailArea.append("        날짜\t     충전금액\t      결제금액\r\n");
+			moneyDetailArea.append("---------------------------------------------------------\r\n");
+			
+			for (int i = 0; i < arData.length; i++) {
+				moneylist = arData[i].split("\t");
+				moneyDetailArea.append(" "+moneylist[3]+"\t      "+moneylist[0]+"\t            "+moneylist[2]+"\r\n");
+			}				
+		} catch (Exception e1) {}
 		
 	}
 };
