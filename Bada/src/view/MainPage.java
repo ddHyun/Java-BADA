@@ -104,6 +104,8 @@ public class MainPage {
 				new OrderPage().orderFrame.setVisible(true);
 				break;
 			case "주문배송 조회":
+				mainFrame.dispose();
+				new TrackPage().trackFrame.setVisible(true);
 				break;
 			}
 		}

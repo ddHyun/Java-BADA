@@ -83,7 +83,7 @@ public class OrderPage {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int choice = JOptionPane.showOptionDialog(orderFrame, 
-						"회원 정보가 주문자와 같다면 '예'를 눌러주세요", jTitle, 0, JOptionPane.PLAIN_MESSAGE, null, null, null);
+						"주문자 정보는 마이페이지에서 수정 후 이용해주세요", jTitle, 0, JOptionPane.PLAIN_MESSAGE, null, null, null);
 				
 				if(choice==0) {
 					userList = new JoinPage().getUserInfo();
@@ -172,7 +172,7 @@ public class OrderPage {
 		
 		//아이콘 이미지
 		new ImageDAO().showTitleIcon(orderFrame);	
-		orderFrame.setVisible(true);
+//		orderFrame.setVisible(true);
 	}
 	
 	//수령인 정보 저장하기 메서드
@@ -309,8 +309,8 @@ public class OrderPage {
 							//검색 결과 우편번호와 나머지 주소를 따로 저장(택배비용 계산을 위해 필요)
 							zip = getZip(zipText, addressTextB);
 							String address = getRestAddress(zipText, addressTextB);
-							area.append(zip+"\r\n");
-							area.append(address);
+							area.append("("+zip+") "+address);
+//							area.append(address);
 							receiverZip = zip;
 							System.out.println("receiverZip:"+receiverZip);
 							btn.setEnabled(false);

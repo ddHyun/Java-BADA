@@ -15,6 +15,7 @@ public class View {
 //		new PayPage();
 //		new LoadMoneyPage();
 //		new PayPage2();
-		new MyPage();
+//		new MyPage();
+		new TrackPage();
 	}
 }

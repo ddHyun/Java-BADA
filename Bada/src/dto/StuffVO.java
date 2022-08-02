@@ -1,5 +1,7 @@
 package dto;
 
+import java.time.LocalDate;
+
 public class StuffVO {//주문물품 관련 정보
 	private int box;
 	private String code, note, stuff;
@@ -12,6 +14,10 @@ public class StuffVO {//주문물품 관련 정보
 	
 	public static StuffVO getInstance() {
 		return instance;
+	}	
+	
+	public LocalDate getDate() {
+		return LocalDate.now();
 	}
 	
 	public float getSize() {

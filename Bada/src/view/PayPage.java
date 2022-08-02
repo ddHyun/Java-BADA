@@ -3,6 +3,8 @@ package view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
@@ -13,8 +15,11 @@ import dao.FrameDAO;
 import dao.ImageDAO;
 import dao.LabelDAO;
 import dao.PanelDAO;
+import dao.StuffDAO;
+import dao.UserDAO;
 import dto.FrameVO;
 import dto.MoneyVO;
+import dto.ReceiverVO;
 import dto.StuffVO;
 import dto.UserVO;
 
@@ -26,10 +31,13 @@ public class PayPage {
 	LabelDAO titleLabel, basicChargeLabel, boxNumLabel, distanceLabel1, distanceLabel2, lineLabel,
 				totalChargeLabel, loadMoneyLabel;
 	MoneyVO mVO = MoneyVO.getInstance();
+	StuffVO sVO = StuffVO.getInstance();
+	ReceiverVO rVO = ReceiverVO.getInstance();
 	ArrayList<UserVO> userList = new ArrayList<>();
 	int basicCharge, boxNum, distance, totalCharge, loadMoney = 0;
 	boolean check = false;
 	int chance = 3; //비밀번호 오류 체크용 변수
+	String trackingNum = "";
 	
 	public PayPage() {
 		payFrame = new FrameDAO();
@@ -114,7 +122,10 @@ public class PayPage {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					checkPwd();					
+					checkPwd();	
+					//송장번호 부여 후 택배신청내역 외부파일에 저장
+					trackingNum = new StuffDAO().trackingNumber();
+					saveDeliverInfo();
 				}
 			});
 		}
@@ -214,5 +225,52 @@ public class PayPage {
 		}
 	}
 	
-	
+	//택배신청내용 외부파일에 저장 메서드
+	public void saveDeliverInfo() {
+		String folderName = new UserDAO().getInfo().getId();
+		File folder = new File(new UserVO().getUserPath()+folderName+"/");
+		if(!folder.exists()) {
+			folder.mkdirs();
+		}
+		
+		try {	
+			//택배주문내역
+			String path = new UserVO().getUserPath()+folderName+"/deliveryDetail.txt";
+			File file = new File(path);
+			file.createNewFile();
+			
+			FileWriter output = new FileWriter(file, true);
+			//송장번호-날짜-물건-코드-크기-무게-박스개수-비고-결제요금-수령인이름-전화-주소
+			output.write(trackingNum);
+			output.write(sVO.getDate()+"\t");
+			output.write(sVO.getStuff()+"\t");
+			output.write(sVO.getCode()+"\t");
+			output.write(sVO.getSize()+"\t");
+			output.write(sVO.getWeight()+"\t");
+			output.write(sVO.getBox()+"\t");
+			output.write(sVO.getNote()+"\t");
+			output.write(mVO.getCharge()+"\t");
+			output.write(rVO.getName()+"\t");
+			output.write(rVO.getPhone()+"\t");
+			output.write(rVO.getAddress()+"\r\n");
+			
+			//충전내역
+			mVO.setFilePath(folderName);
+			File file1 = new File(mVO.getFilePath());
+			file1.createNewFile();
+			
+			FileWriter output1 = new FileWriter(file1, true);
+			output1.write(0+"\t");
+			output1.write(mVO.getTotalMoney()+"\t");
+			output1.write(mVO.getCharge()+"\t");
+			output1.write(mVO.getConvertedDate()+"\r\n");
+			
+			output.close();
+			output1.close();
+			
+		}catch(Exception e) {
+			
+		}
+		
+	}
 }

@@ -22,6 +22,7 @@ import dao.ImageDAO;
 import dao.LabelDAO;
 import dao.MoneyDAO;
 import dao.PanelDAO;
+import dao.StuffDAO;
 import dao.TextDAO;
 import dao.UserDAO;
 import dto.FrameVO;
@@ -77,8 +78,10 @@ public class MyPage {
 		moneyText.setEditable(false);
 		//로그인된 아이디의 충전관련 정보 가져오기
 		moneyList = new MoneyDAO().getMoneyList();
-		System.out.println("moneyList의 totalmoney : "+moneyList.get(moneyList.size()-1).getTotalMoney());
-		int totalMoney = moneyList.get(moneyList.size()-1).getTotalMoney();
+		int totalMoney = 0;
+		if(moneyList.size()!=0) {
+			totalMoney = moneyList.get(moneyList.size()-1).getTotalMoney();
+		}
 		moneyText.setText(""+totalMoney+"원");
 		moneyText.setHorizontalAlignment(JLabel.RIGHT);
 		moneyBtn = new ButtonDAO();
@@ -119,14 +122,14 @@ public class MyPage {
 				mypageFrame.dispose();
 				new MainPage().mainFrame.setVisible(true);
 			}
-		});
+		});		
 		
 		//내역확인 버튼 클릭 시 충전내역 띄우기
 		moneyDetailBtn.addActionListener(showDetail);
 		
 		//아이콘이미지
 		new ImageDAO().showTitleIcon(mypageFrame);
-		mypageFrame.setVisible(true);
+//		mypageFrame.setVisible(true);
 	}
 	
 	//정보 변경
@@ -218,7 +221,7 @@ public class MyPage {
 		addressBtn.setVisible(false);
 		addressArea.setVisible(false);
 		addressScrollPane.setVisible(false);
-		changeBtn.setVisible(false);			
+		changeBtn.setVisible(false);
 	}
 		
 	//비밀번호수정 form 안보이게 하기 메서드
@@ -313,11 +316,17 @@ ActionListener showDetail = new ActionListener() {
 			arData = temp.split("\r\n");
 			
 			moneyDetailArea.append("        날짜\t     충전금액\t      결제금액\r\n");
-			moneyDetailArea.append("---------------------------------------------------------\r\n");
+			moneyDetailArea.append("--------------------------------------------------------\r\n");
 			
 			for (int i = 0; i < arData.length; i++) {
 				moneylist = arData[i].split("\t");
-				moneyDetailArea.append(" "+moneylist[3]+"\t      "+moneylist[0]+"\t            "+moneylist[2]+"\r\n");
+				if(moneylist[2].equals("0")) {
+					moneyDetailArea.append(" "+moneylist[3]+"\t      "+moneylist[0]+"\r\n");
+				}else if(moneylist[0].equals("0")) {
+					moneyDetailArea.append(" "+moneylist[3]+"\t      \t         -"+moneylist[2]+"\r\n");
+				}else {
+				moneyDetailArea.append(" "+moneylist[3]+"\t      "+moneylist[0]+"\t       -"+moneylist[2]+"\r\n");
+				}
 			}				
 		} catch (Exception e1) {}
 		
