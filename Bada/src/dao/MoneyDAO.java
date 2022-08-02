@@ -2,6 +2,7 @@ package dao;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import dto.MoneyVO;
@@ -15,6 +16,7 @@ public class MoneyDAO {
 		moneyList = new ArrayList<MoneyVO>();
 	}
 	
+	//로그인아이디의 충전내역 외부에서 가져오기
 	public ArrayList<MoneyVO> getMoneyList(){
 		String loginedId = new UserDAO().getInfo().getId();
 		mVO.setFilePath(loginedId);
@@ -39,7 +41,7 @@ public class MoneyDAO {
 				mVO.setLoadMoney(Integer.parseInt(moneylist[0]));
 				mVO.setTotalMoney(Integer.parseInt(moneylist[1]));
 				mVO.setCharge(Integer.parseInt(moneylist[2]));
-//				mVO.setDate((LocalDate)moneylist[3]);
+				mVO.setDate(moneylist[3]);
 				
 				moneyList.add(mVO);
 			}	

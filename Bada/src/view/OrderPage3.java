@@ -28,8 +28,8 @@ public class OrderPage3 {
 	ButtonDAO cancelBtn, nextBtn;
 	JTextArea orderArea;
 	JScrollPane orderScrollPane;
-	StuffVO stuffVO = StuffVO.getInstance();
-	ReceiverVO receiverVO = ReceiverVO.getInstance();
+	StuffVO sVO = StuffVO.getInstance();
+	ReceiverVO rVO = ReceiverVO.getInstance();
 	ArrayList<UserVO> userList = new ArrayList<UserVO>();
 	
 	public OrderPage3() {
@@ -54,7 +54,6 @@ public class OrderPage3 {
 		orderArea.setEditable(false);
 		
 		//주문자 정보 textArea에 담기
-//		UserVO uVO = getSenderInfo();
 		UserVO uVO = new UserDAO().getInfo();
 		orderArea.append("\r\n");
 		orderArea.append("[주문자]\r\n");
@@ -64,16 +63,16 @@ public class OrderPage3 {
 		//수령자 정보 textArea에 담기
 		orderArea.append("\r\n");
 		orderArea.append("[수령인]\r\n");
-		orderArea.append(" 이름 : "+receiverVO.getName()+"\r\n");
-		orderArea.append(" 전화 : "+receiverVO.getPhone()+"\r\n");
-		orderArea.append(" 주소 : "+receiverVO.getAddress()+"\r\n");
+		orderArea.append(" 이름 : "+rVO.getName()+"\r\n");
+		orderArea.append(" 전화 : "+rVO.getPhone()+"\r\n");
+		orderArea.append(" 주소 : "+rVO.getAddress()+"\r\n");
 		orderArea.append("\r\n");
 		//물품 정보 textArea에 담기
 		orderArea.append("[주문물품]\r\n");
-		orderArea.append(" 무게 : "+stuffVO.getWeight()+"kg / 크기 : "+stuffVO.getSize()+"cm\r\n");
-		orderArea.append(" 물품 : "+stuffVO.getCode()+"/ "+stuffVO.getStuff()+"\r\n");
-		orderArea.append(" 박스 : "+stuffVO.getBox()+"개\r\n");
-		orderArea.append(" 배송시 유의사항 : "+stuffVO.getNote());
+		orderArea.append(" 무게 : "+sVO.getWeight()+"kg / 크기 : "+sVO.getSize()+"cm\r\n");
+		orderArea.append(" 물품 : "+sVO.getCode()+"/ "+sVO.getStuff()+"\r\n");
+		orderArea.append(" 박스 : "+sVO.getBox()+"개\r\n");
+		orderArea.append(" 배송시 유의사항 : "+sVO.getNote());
 	
 		//취소, 결제버튼
 		cancelBtn = new ButtonDAO();
@@ -110,12 +109,5 @@ public class OrderPage3 {
 		new ImageDAO().showTitleIcon(order3Frame);
 		order3Frame.setVisible(true);
 		
-	}
-	
-	//주문자 정보 가져오기
-//	public UserVO getSenderInfo() {
-//		userList = new JoinPage().getUserInfo();
-//		UserVO vo = userList.get(UserVO.index);
-//		return vo;
-//	}
+	}		
 }

@@ -1,13 +1,14 @@
 package dto;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import dao.UserDAO;
 
 public class MoneyVO {
 	
 	private int loadMoney, totalMoney, charge; //loadMoney(충전금액)/ totalMoney(총 잔액)/ charge(결제금액)
-	private LocalDate date = LocalDate.now();
+	private String date;
 	private String filePath;
 	private String fileName;
 	
@@ -47,12 +48,19 @@ public class MoneyVO {
 	public void setCharge(int charge) {
 		this.charge = charge;
 	}
+	
 	//현재날짜
-	public LocalDate getDate() {
-		return date;
+	public String getConvertedDate() {
+		String convertedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		return convertedDate;
 	}	
 	
-	public void setDate(LocalDate date) {
+	//저장된 날짜 가져오기
+	public void setDate(String date) {
 		this.date = date;
+	}
+	
+	public String getDate() {
+		return date;
 	}
 }

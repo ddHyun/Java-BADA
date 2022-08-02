@@ -15,6 +15,7 @@ import dao.ButtonDAO;
 import dao.FrameDAO;
 import dao.ImageDAO;
 import dao.LabelDAO;
+import dao.MoneyDAO;
 import dao.PanelDAO;
 import dao.UserDAO;
 import dto.FrameVO;
@@ -212,9 +213,6 @@ public class LoadMoneyPage {
 					String input = 
 							JOptionPane.showInputDialog(loadMoneyFrame, "비밀번호를 입력하세요(기회 "+chance+"번)", 
 									"충전하기", JOptionPane.DEFAULT_OPTION);
-//					userList = new JoinPage().getUserInfo();
-//					UserVO vo = userList.get(UserVO.index);
-//					String pwd = vo.getPw();
 					String pwd = new UserDAO().getInfo().getPw();
 					if(input.equals(pwd)) {
 						mVO.setLoadMoney(loadMoney);
@@ -222,8 +220,7 @@ public class LoadMoneyPage {
 						JOptionPane.showMessageDialog(loadMoneyFrame, "충전이 완료되었습니다", 
 								"충전하기", JOptionPane.INFORMATION_MESSAGE);
 						currentMoney2Label.setText(mVO.getTotalMoney()+"원");
-						loadMoney = 0;
-						loadMoney2Label.setText(loadMoney+"원");
+						loadMoney2Label.setText("0원");
 						messageLabel.setVisible(false);
 						yesBtn.setVisible(false);
 						noBtn.setVisible(false);
@@ -264,7 +261,6 @@ public class LoadMoneyPage {
 		}
 		try {
 			//아이디폴더 안에 충전내역 기록파일 만들기
-//			String fileName = "loadMoneyDetail.txt"; 
 			mVO.setFilePath(folderName);
 			File file = new File(mVO.getFilePath());
 			file.createNewFile();
@@ -275,7 +271,7 @@ public class LoadMoneyPage {
 			output.write(mVO.getLoadMoney()+"\t");
 			output.write(mVO.getTotalMoney()+"\t");
 			output.write(mVO.getCharge()+"\t");
-			output.write(mVO.getDate()+"\r\n");
+			output.write(mVO.getConvertedDate()+"\r\n");
 			output.close();
 		}catch(Exception e) {}
 	}
