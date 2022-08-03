@@ -15,7 +15,7 @@ import dao.FrameDAO;
 import dao.ImageDAO;
 import dao.LabelDAO;
 import dao.PanelDAO;
-import dao.StuffDAO;
+import dao.OrderDAO;
 import dao.UserDAO;
 import dto.FrameVO;
 import dto.MoneyVO;
@@ -124,7 +124,7 @@ public class PayPage {
 				public void actionPerformed(ActionEvent e) {
 					checkPwd();	
 					//송장번호 부여 후 택배신청내역 외부파일에 저장
-					trackingNum = new StuffDAO().trackingNumber();
+					trackingNum = new OrderDAO().trackingNumber();
 					saveDeliverInfo();
 				}
 			});
@@ -241,7 +241,7 @@ public class PayPage {
 			
 			FileWriter output = new FileWriter(file, true);
 			//송장번호-날짜-물건-코드-크기-무게-박스개수-비고-결제요금-수령인이름-전화-주소
-			output.write(trackingNum);
+			output.write(trackingNum+"\t");
 			output.write(sVO.getDate()+"\t");
 			output.write(sVO.getStuff()+"\t");
 			output.write(sVO.getCode()+"\t");
