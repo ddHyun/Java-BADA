@@ -14,7 +14,7 @@ public class StuffVO {//주문물품 관련 정보
 	
 	public static StuffVO getInstance() {
 		return instance;
-	}	
+	}		
 	
 	public LocalDate getDate() {
 		return LocalDate.now();

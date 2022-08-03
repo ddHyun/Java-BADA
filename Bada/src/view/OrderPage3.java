@@ -73,7 +73,7 @@ public class OrderPage3 {
 		orderArea.append(" 물품 : "+sVO.getCode()+"/ "+sVO.getStuff()+"\r\n");
 		orderArea.append(" 박스 : "+sVO.getBox()+"개\r\n");
 		orderArea.append(" 배송시 유의사항 : "+sVO.getNote());
-	
+		
 		//취소, 결제버튼
 		cancelBtn = new ButtonDAO();
 		cancelBtn.makeGrayButton("취소하기", order3Layer, 1);

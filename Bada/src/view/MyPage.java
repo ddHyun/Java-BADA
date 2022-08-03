@@ -22,7 +22,7 @@ import dao.ImageDAO;
 import dao.LabelDAO;
 import dao.MoneyDAO;
 import dao.PanelDAO;
-import dao.StuffDAO;
+import dao.OrderDAO;
 import dao.TextDAO;
 import dao.UserDAO;
 import dto.FrameVO;

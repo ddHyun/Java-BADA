@@ -8,7 +8,7 @@ public class View {
 //		new LoginPage();
 //		new JoinPage();
 //		new LoginPage2();
-//		new MainPage();
+		new MainPage();
 //		new OrderPage();
 //		new OrderPage2();
 //		new OrderPage3();
@@ -16,6 +16,6 @@ public class View {
 //		new LoadMoneyPage();
 //		new PayPage2();
 //		new MyPage();
-		new TrackPage();
+//		new TrackPage();
 	}
 }
