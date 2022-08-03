@@ -83,7 +83,7 @@ public class MainPage {
 		
 		//아이콘이미지
 		new ImageDAO().showTitleIcon(mainFrame);
-		mainFrame.setVisible(true);
+//		mainFrame.setVisible(true);
 	}	
 	
 	//버튼 클릭 시 페이지 이동
