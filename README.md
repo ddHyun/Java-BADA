@@ -3,8 +3,8 @@
 ## 근거리 택배 대행 애플리케이션
 -팀프로젝트를 자바 복습 겸 연습으로 개인적으로 다시 만들어 봄  
 
-![image](https://user-images.githubusercontent.com/107980962/216862170-55d56756-4a3f-4e1a-965a-1cfe482fd44e.png)
-![image](https://user-images.githubusercontent.com/107980962/216862451-c78ec7a8-183c-4831-ab4e-f654e4293419.png)
+<img width="400px" src="https://user-images.githubusercontent.com/107980962/216862170-55d56756-4a3f-4e1a-965a-1cfe482fd44e.png">
+<img width="400px" src="https://user-images.githubusercontent.com/107980962/216862451-c78ec7a8-183c-4831-ab4e-f654e4293419.png">
 <img width="400px" src="https://user-images.githubusercontent.com/107980962/216862487-19a10873-4e56-4de3-8eab-54a74e85e6b6.png">
 <img width="400px" src="https://user-images.githubusercontent.com/107980962/216870405-030ce443-4391-4bdc-ae62-b8836efe9e64.png">
 <img width="400px" src="https://user-images.githubusercontent.com/107980962/216870481-0dc1c74e-9d9e-4d77-bce7-f710b40ae2d9.png">
